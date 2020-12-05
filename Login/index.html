@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<link rel="stylesheet" href="loginStyle.css">
+<script src="login.js"></script>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Task-Login</title>
+  </head>
+  <body>
+    <div class='container'>
+      <div id="header" class='jumbotron'>
+          <h1>Log In</h1> 
+      </div>
+      <div id="switcher">
+            <button id="LoginSwitch">Log In</button>
+            <button id="SignUpSwitch">Sign Up</button>
+        </div>
+      <div id="login">
+          <label for="username"> <b>Username</b></label>
+          <input type="text" id="loginUser" name="username"> <br>
+          <label for="password"><b>Password</b></label>
+          <input type="password" name="password" id="loginPassword"> <br>
+            <button id="loginSubmit">Log in </button>
+      </div>
+      <div id="signup">
+            <label for="Username">Username</label>
+            <input type="text" name="signUser" id="signUser"> <br>
+            <label for="Firstname">Firstname</label>
+            <input type="text" name="Firstname" id="signFirst"> <br>
+            <label for="Password">Password</label>
+            <input type="password" name="Password" id="signPassword"> <br>
+            <button id="signupSubmit" > Sign Up</button>
+      </div>
+    </div>
+  </body>
+</html>
