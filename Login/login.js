@@ -22,8 +22,9 @@ $(function(){
             url:'login',
             data:loginData,
             success:function(res){
-                console.log(res)
-            }    
+               if(res=='good') window.location.pathname='/home.html'
+               document.cookie = 'username=' + userName;
+            }
         })
     });
 

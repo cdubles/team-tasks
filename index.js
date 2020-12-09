@@ -59,16 +59,18 @@ app.post("/signup", function (req, res) {
           console.log("no user");
           addUser(userName, firstName, password); //make a new user
           res.send('user made')
+          res.end();
         } else {
           console.log("user found");
           res.send("user exists")
+          res.end();
         }
       });
     db.close();
   });
-  res.send("signup Complete");
+
   console.log("============================================");
-  res.end();
+  
 });
 
 //login user if all info is right
@@ -85,14 +87,15 @@ app.post("/login", function (req, res) {
     dbo.collection("profiles").findOne({name:userName}, function(err, result) {
       if (err) throw err;
       console.log(result);
-
+      if (result==null) return;
       if(result.pwd == password){ //sign in condition
         console.log('login good')
-        res.redirect('/home.html')
+        res.send('good')
         res.end();
       }
       else{
         console.log("sign in error")
+        res.send('bad');
         res.end();
       }
       db.close();

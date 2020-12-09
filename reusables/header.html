@@ -3,4 +3,17 @@
 <button>Projects</button>
 <button>Profile</button>
 <button>Direct Messages</button>
+<p id="name">name: </p>
+
+<script>
+    console.log(document.cookie)
+    cookie = document.cookie;
+    cookies =  cookie.split('=')
+    for(var i=0; i<=cookies.length;i++){
+        if(cookies[i]=='username'){
+            document.getElementById("name").innerHTML ='name: ' + cookies[i+1]
+            break;
+        }
+    }
+</script>
 </div>
