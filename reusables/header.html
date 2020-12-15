@@ -1,19 +1,34 @@
-<div class="jumbotron">   
+<div class="jumbotron" id="header"> 
 <h1>Team Tasks</h1> <br>
-<button>Projects</button>
-<button>Profile</button>
-<button>Direct Messages</button>
+<button class="button" id="project_button">Projects</button>
+<button class="button">Profile</button>
+<button class="button">Direct Messages</button>
 <p id="name">name: </p>
 
 <script>
+    $('#project_button').click( function(){ window.location.pathname='/projects.html' })
     console.log(document.cookie)
     cookie = document.cookie;
-    cookies =  cookie.split('=')
+    cookies =  cookie.split('=');
     for(var i=0; i<=cookies.length;i++){
         if(cookies[i]=='username'){
-            document.getElementById("name").innerHTML ='name: ' + cookies[i+1]
+            document.getElementById("name").innerHTML ='name: ' + cookies[i+1];
             break;
         }
     }
 </script>
+
+<style>
+    #header{
+    color: black;
+    background-color:gray;
+    text-align: center;
+        
+}
+.button{
+  color: black;
+  border-radius: 5px;
+  border: 2px solid #314455;
+}
+</style>
 </div>

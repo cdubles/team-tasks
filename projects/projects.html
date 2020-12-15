@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<link rel="stylesheet" href="projectStyles.css">
+<script src="projects.js"></script>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Task-Projects</title>
+  </head>
+  <body>
+    <div class='container'>
+      <div id="header" ></div>
+        <!-- body start-->
+            <div id="pageBody">
+              <button id="createNew">Create new project</button>
+              
+              <div id="newProject">
+                <label for="projectName">Project name: </label>
+                <input type="text" name='projectName' id="projectName"> <br>
+                <label for="description">description: </label> 
+                <input type="text" name="description" id="description"> <br>
+                <label for="members">members too add(separate username with comas and no space)</label>
+                <input type="text" name="members" id="members"> <br>
+                <button id="makeProjectButton">make new project</button>
+              </div>
+              <div id='activeProjects'>
+                
+              </div>
+            </div>
+        <!-- body end-->
+        <div id="footer" ></div>
+    </div>
+  </body>
+</html>

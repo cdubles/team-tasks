@@ -1,25 +1,16 @@
 body{
-    background-color: gray;
+    background-color: #314455;
     width: 100%;
     height: 100%;
 }
 
-#header{
-    color: orange;
-    text-align: center;    
-}
 
-#header button{
-    background-color: white;
-  color: black;
-  border: 2px solid orange;
-}
 #projects{
     width: 30vmax;
     height: 50vmax;
     position: absolute;
     left: 10px;
-    border: 3px solid orange;
+    border: 3px solid #152c41;
     padding: 10px;
     background: darkGrey;
 }
