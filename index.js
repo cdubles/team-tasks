@@ -29,10 +29,10 @@ function addUser(userName, firstName, password) {
       name: userName,
       firstName: firstName,
       pwd: password,
-      projects:null,
+      projects: null,
     };
-    dbo.collection("profiles").insertOne(newUser, function (err, res) {
-      if (err) throw err;
+    dbo.collection("profiles").insertOne(newUser, function (error, res) {
+      if (error) throw error;
       console.log("1 document inserted");
       db.close();
     });
@@ -44,7 +44,7 @@ app.post("/signup", function (req, res) {
   var userName = helper.sanitize(req.body.username);
   var firstName = helper.sanitize(req.body.firstname);
   var password = req.body.password;
-  var userExists;
+
   MongoClient.connect(database, function (err, db) {
     if (err) throw err;
     var dbo = db.db("TEAM_TASKS");
@@ -52,8 +52,8 @@ app.post("/signup", function (req, res) {
     dbo
       .collection("profiles")
       .find(query)
-      .toArray(function (err, result) {
-        if (err) throw err;
+      .toArray(function (error, result) {
+        if (error) throw error;
         console.log(result);
         if (result === undefined || result.length == 0) {
           // user not found
@@ -73,7 +73,6 @@ app.post("/signup", function (req, res) {
 
 //login user if all info is right
 app.post("/login", function (req, res) {
-  
   var userName = req.body.user;
   var password = req.body.password;
 
@@ -84,17 +83,17 @@ app.post("/login", function (req, res) {
     var dbo = db.db("TEAM_TASKS");
     dbo
       .collection("profiles")
-      .findOne({ name: userName }, function (err, result) {
-        if (err) throw err;
+      .findOne({ name: userName }, function (error, result) {
+        if (error) throw error;
         console.log(result);
         if (result == null) return;
         if (result.pwd == password) {
-          //sign in condition
+          //login condition
           console.log("login good");
           res.send("good");
           res.end();
         } else {
-          console.log("sign in error");
+          console.log("login error");
           res.send("bad");
           res.end();
         }
@@ -103,30 +102,65 @@ app.post("/login", function (req, res) {
   });
 });
 
-app.post('/makeProject',function(req,res){
-    var name = req.body.name;
-    var desc = req.body.description;
-    var members = req.body.members;
+app.post("/makeProject", function (req, res) {
+  var name = req.body.name;
+  var desc = req.body.description;
+  var members = req.body.members;
 
-    var newProject = {name:name,description:desc,members:members}
-    MongoClient.connect(database,function(err, db){
-      var dbo = db.db('TEAM_TASKS');
-      dbo
-        .collection('projects')
-        .find({name:name})
-        .toArray(function(err,result){
-          if(result === undefined || result.length == 0){//no project found
-            dbo.collection("projects").insertOne(newProject, function (err, res) {
-              if (err) throw err;
+  var newProject = { name: name, description: desc, members: members };
+  MongoClient.connect(database, function (err, db) {
+    var dbo = db.db("TEAM_TASKS");
+    dbo
+      .collection("projects")
+      .find({ name: name })
+      .toArray(function (error, result) {
+        if (result === undefined || result.length == 0) {
+          //no project found
+          dbo
+            .collection("projects")
+            .insertOne(newProject, function (error2, response) {
+              if (error2) throw error2;
               console.log("1 document inserted");
               db.close();
+              res.send("created");
             });
-          } 
-          else{// project already made
+        } else {
+          // project already made
+          res.send("already-created");
+        }
+      });
+  });
+});
 
-          }
-        })
-    });
+//find all projects a user is in
+app.post("/findProjects", function (req, res) {
+  MongoClient.connect(database, function (err, db) {
+    var dbo = db.db("TEAM_TASKS");
+    dbo
+      .collection("profiles")
+      .find({ name: req.body.userName })
+      .toArray(function (error, result) {
+        console.log(result[0].projects);
+        console.log(req.body.userName);
+      });
+  });
+});
+app.post("/allPeople", function (rq, res) {
+  MongoClient.connect(database, function (err, db) {
+    var dbo = db.db("TEAM_TASKS");
+    dbo
+      .collection("profiles")
+      .find()
+      .toArray(function (error, result) {
+        var peopleArray = [];
+        for (var i = 0; i < result.length; i++) {
+          peopleArray.push(result[i].firstName);
+          console.log(result[i])
+        }
+        res.send(peopleArray);
+        res.end();
+      });
+  });
 });
 //for socket connections
 io.on("connection", (socket) => {
