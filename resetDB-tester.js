@@ -13,3 +13,15 @@ MongoClient.connect(database, function (err, db) {
     db.close();
   });
 });
+
+//clear projects
+MongoClient.connect(database, function (err, db) {
+  if (err) throw err;
+  var dbo = db.db("TEAM_TASKS");
+  var myquery = {};
+  dbo.collection("projects").deleteMany(myquery, function (err, obj) {
+    if (err) throw err;
+    console.log(obj.result.n + " document(s) deleted");
+    db.close();
+  });
+});

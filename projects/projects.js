@@ -22,7 +22,7 @@ $(function () {
   $("button#makeProjectButton").click(function () {
     var name = $("input#projectName").val();
     var desc = $("input#description").val();
-    var members = $("input#members").val();
+    var members = getCheckedPeople();
 
     var projectData = { name: name, description: desc, members: members };
     $.ajax({
@@ -44,7 +44,7 @@ function getProjects() {
     url: "findProjects",
     data: data,
     success: function (res) {
-      console.log(res);
+      console.log("current Projects: " + res);
     },
   });
 }
@@ -53,11 +53,29 @@ function getPeople() {
     type: "POST",
     url: "allPeople",
     success: function (res) {
-      for(var names = 0;names<=res.length;names++){
-        $("div#members").append('<input type="checkbox" class="person_clickable">'+res[names]+"</input> <br>")
+      for (var names = 0; names < res.length; names++) {
+        $("div#members").append(
+          "<input name=" +
+            res[names] +
+            ' type="checkbox" class="person_clickable">' +
+            res[names] +
+            "</input> <br>"
+        );
       }
     },
   });
+}
+
+function getCheckedPeople() {
+  var checked = [];
+  var checkboxes = document.getElementsByClassName("person_clickable");
+  for (var boxes = 0; boxes < checkboxes.length; boxes++) {
+    if (checkboxes[boxes].checked == true) {
+      checked.push(checkboxes[boxes].name);
+    }
+  }
+  console.log(checked);
+  return checked;
 }
 
 getPeople();

@@ -121,12 +121,24 @@ app.post("/makeProject", function (req, res) {
             .insertOne(newProject, function (error2, response) {
               if (error2) throw error2;
               console.log("1 document inserted");
+              //add to members profiles
+              for (var member = 0; member <= members.length; member++) {
+                dbo
+                  .collection("profiles")
+                  .find({ name: members[member] })
+                  .toArray(function (error3, members_results) {
+                    console.log(members_results);
+                  });
+              }
+
               db.close();
               res.send("created");
+              res.end();
             });
         } else {
           // project already made
           res.send("already-created");
+          res.end();
         }
       });
   });
@@ -142,9 +154,13 @@ app.post("/findProjects", function (req, res) {
       .toArray(function (error, result) {
         console.log(result[0].projects);
         console.log(req.body.userName);
+        res.send(result[0].projects);
+        res.end();
       });
   });
 });
+
+//send all people userNames and firstname to frontend
 app.post("/allPeople", function (rq, res) {
   MongoClient.connect(database, function (err, db) {
     var dbo = db.db("TEAM_TASKS");
@@ -155,7 +171,7 @@ app.post("/allPeople", function (rq, res) {
         var peopleArray = [];
         for (var i = 0; i < result.length; i++) {
           peopleArray.push(result[i].firstName);
-          console.log(result[i])
+          console.log(result[i]);
         }
         res.send(peopleArray);
         res.end();
